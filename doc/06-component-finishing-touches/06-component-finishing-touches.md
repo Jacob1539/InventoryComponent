@@ -394,6 +394,6 @@ PDF to read this rubric as a table).
 > that could help you complete this assignment? Feel free to use the feedback
 > rubric above when reviewing this assignment.
 
-<!-- TODO: share your feedback here -->
+The portfolio project was definitely my favorite part of software 2.  I feel like this final assignment was as much work as all the others combined, but I didn't mind because I knew I was close to having a finished product (and, I think this is inevitable given that issues are hard to spot up until this point).  Thank you for the opportunity to complete this project!
 
 [markdown-to-pdf-guide]: https://therenegadecoder.com/blog/how-to-convert-markdown-to-a-pdf-3-quick-solutions/
