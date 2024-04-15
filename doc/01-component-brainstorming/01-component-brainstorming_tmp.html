@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>01-component-brainstorming.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* a11y-light theme */
+/* Based on the Tomorrow Night Eighties theme: https://github.com/isagalaev/highlight.js/blob/master/src/styles/tomorrow-night-eighties.css */
+/* @author: ericwbailey */
+
+/* Comment */
+.hljs-comment,
+.hljs-quote {
+  color: #696969;
+}
+
+/* Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+  color: #d91e18;
+}
+
+/* Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+  color: #aa5d00;
+}
+
+/* Yellow */
+.hljs-attribute {
+  color: #aa5d00;
+}
+
+/* Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+  color: #008000;
+}
+
+/* Blue */
+.hljs-title,
+.hljs-section {
+  color: #007faa;
+}
+
+/* Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+  color: #7928a1;
+}
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  background: #fefefe;
+  color: #545454;
+  padding: 0.5em;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+@media screen and (-ms-high-contrast: active) {
+  .hljs-addition,
+  .hljs-attribute,
+  .hljs-built_in,
+  .hljs-builtin-name,
+  .hljs-bullet,
+  .hljs-comment,
+  .hljs-link,
+  .hljs-literal,
+  .hljs-meta,
+  .hljs-number,
+  .hljs-params,
+  .hljs-string,
+  .hljs-symbol,
+  .hljs-type,
+  .hljs-quote {
+        color: highlight;
+    }
+
+    .hljs-keyword,
+    .hljs-selector-tag {
+        font-weight: bold;
+    }
+}
+
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="portfolio-part-1-component-brainstorming">Portfolio Part 1: Component Brainstorming</h1>
+<ul>
+<li><strong>Name</strong>: Jacob Witt</li>
+<li><strong>Dot Number</strong>: witt.209</li>
+<li><strong>Due Date</strong>: 2/16/24</li>
+</ul>
+<h2 id="assignment-overview">Assignment Overview</h2>
+<p>The overall goal of the portfolio project is to have you design and implement
+your own OSU component. There are no limits to what you choose to design and
+implement, but your component must fit within the constraints of our software
+sequence discipline. In other words, the component must extend from Standard and
+must include both a kernel and a secondary interface.</p>
+<p>Because this is a daunting project, we will be providing you with a series of
+activities to aid in your design decisions. For example, the point of this
+assignment is to help you brainstorm a few possible components and get some
+feedback. For each of these components, you will need to specify the high-level
+design in terms of the software sequence discipline. In other words, you will
+describe a component, select a few kernel methods for your component, and select
+a few secondary methods to layer on top of your kernel methods.</p>
+<p>You are not required to specify contracts at this time. However, you are welcome
+to be as detailed as you'd like. More detail means you will be able to get more
+detailed feedback, which may help you decide which component to ultimately
+implement.</p>
+<h2 id="assignment-checklist">Assignment Checklist</h2>
+<p>Because these documents are long and full of text, you will be supplied with
+a quick overview of what you need to do to get the assignment done as follows:</p>
+<h3 id="getting-started-tasks">Getting Started Tasks</h3>
+<ul>
+<li><input type="checkbox" id="checkbox0" checked="true"><label for="checkbox0">I have added my name to the top of this document</label></li>
+<li><input type="checkbox" id="checkbox1" checked="true"><label for="checkbox1">I have added my dot number to the top of this document</label></li>
+<li><input type="checkbox" id="checkbox2" checked="true"><label for="checkbox2">I have added the due date to the top of this document</label></li>
+<li><input type="checkbox" id="checkbox3" checked="true"><label for="checkbox3">I have read the assignment overview in the &quot;Assignment Overview&quot; section</label></li>
+<li><input type="checkbox" id="checkbox4" checked="true"><label for="checkbox4">I have read the assignment learning objectives in the &quot;Assignment Learning Objectives&quot; section</label></li>
+<li><input type="checkbox" id="checkbox5" checked="true"><label for="checkbox5">I have read the assignment rubric in the &quot;Assignment Rubric&quot; section</label></li>
+<li><input type="checkbox" id="checkbox6" checked="true"><label for="checkbox6">I have read this checklist</label></li>
+</ul>
+<h3 id="ongoing-tasks">Ongoing Tasks</h3>
+<ul>
+<li><input type="checkbox" id="checkbox7"><label for="checkbox7">I have shared my interests in the &quot;Pre-Assignment&quot; section</label></li>
+<li><input type="checkbox" id="checkbox8"><label for="checkbox8">I have drafted my first component idea in the &quot;Component Designs&quot; section</label></li>
+<li><input type="checkbox" id="checkbox9"><label for="checkbox9">I have drafted my second component idea in the &quot;Component Designs&quot; section</label></li>
+<li><input type="checkbox" id="checkbox10"><label for="checkbox10">I have dradted my third component idea in the &quot;Component Designs&quot; section</label></li>
+</ul>
+<h3 id="submission-tasks">Submission Tasks</h3>
+<ul>
+<li><input type="checkbox" id="checkbox11"><label for="checkbox11">I have shared assignment feedback in the &quot;Assignment Feedback&quot; section</label></li>
+<li><input type="checkbox" id="checkbox12"><label for="checkbox12">I have converted this document to a PDF</label></li>
+<li><input type="checkbox" id="checkbox13"><label for="checkbox13">I am prepared to submit the PDF on Carmen</label></li>
+<li><input type="checkbox" id="checkbox14"><label for="checkbox14">I am prepared to give my peers feedback on their ideas</label></li>
+</ul>
+<h2 id="assignment-learning-objectives">Assignment Learning Objectives</h2>
+<p>Without learning objectives, there really is no clear reason why a particular
+assessment or activity exists. Therefore, to be completely transparent, here is
+what we're hoping you will learn through this particular aspect of the portfolio
+project. Specifically, students should be able to:</p>
+<ol>
+<li>Integrate their areas of interest in their personal lives and/or careers with
+their knowledge of software design</li>
+<li>Determine the achievablility of a software design given time constraints</li>
+<li>Design high-level software components following the software sequence
+discipline</li>
+</ol>
+<h2 id="assignment-rubric-10-points">Assignment Rubric: 10 Points</h2>
+<p>Again, to be completely transparent, most of the portfolio project, except the
+final submission, is designed as a formative assessment. Formative assessments
+are meant to provide ongoing feedback in the learning process. Therefore,
+the rubric is designed to assess the learning objectives <em>directly</em> in a way
+that is low stakes—meaning you shouldn't have to worry about the grade. Just
+do good work.</p>
+<ol>
+<li>(3 points) Each design must align with your personal values and long-term
+goals. Because the goal of this project is to help your build out a
+portfolio, you really ought to care about what you're designing. We'll give
+you a chance to share your personal values, interests, and long-term goals
+below.</li>
+<li>(3 points) Each design must be achievable over the course of a single
+semester. Don't be afraid to design something very small. There is no shame
+in keeping it simple.</li>
+<li>(4 points) Each design must fit within the software sequence discipline. In
+other words, your design should expect to inherit from Standard, and it
+should contain both kernel and secondary methods. Also, null and aliasing
+must be avoided, when possible. The methods themselves must also be in
+justifiable locations, such as kernel or secondary.</li>
+</ol>
+<h2 id="pre-assignment">Pre-Assignment</h2>
+<blockquote>
+<p>Before you jump in, we want you to take a moment to share your interests
+below. Use this space to talk about your career goals as well as your personal
+hobbies. These will help you clarify your values before you start
+brainstorming. Plus it helps us get to know you better! Feel free to share
+images in this section.</p>
+</blockquote>
+<!-- TODO: briefly talk about your interests and delete this comment -->
+<h2 id="assignment">Assignment</h2>
+<p>As previously stated, you are tasked with brainstorming 3 possible components.
+To aid you in this process, we have provided some example components that may
+help you in your brainstorming. These components are organized by CSE
+specializations.</p>
+<ul>
+<li>Artificial Intelligence
+<ul>
+<li>Artificial Neuron</li>
+<li>Activation Function</li>
+<li>Graphs</li>
+<li>Search</li>
+</ul>
+</li>
+<li>Computer Graphics and Game Design
+<ul>
+<li>Pixel</li>
+<li>Polygon</li>
+<li>Geometry</li>
+<li>Pathing</li>
+</ul>
+</li>
+<li>Database Systems and Data Analytics
+<ul>
+<li>Object Relational Mapping (ORM)</li>
+<li>Any Data Model</li>
+<li>Scraping</li>
+<li>Data Mining</li>
+</ul>
+</li>
+<li>Information and Computation Assurance
+<ul>
+<li>Password Hashing</li>
+</ul>
+</li>
+<li>Computer Networking
+<ul>
+<li>Packet</li>
+<li>MAC Address</li>
+<li>IP Address</li>
+</ul>
+</li>
+<li>Computer Systems
+<ul>
+<li>Complex Logic Gate</li>
+<li>Semiconductor</li>
+</ul>
+</li>
+<li>Software Engineering
+<ul>
+<li>Unit Testing</li>
+<li>Performance Testing</li>
+</ul>
+</li>
+<li>Individualized Option (e.g., X + CS)
+<ul>
+<li>Mathematical Matrix</li>
+<li>Music Playlist</li>
+</ul>
+</li>
+</ul>
+<p>There is no requirement that you make use of any of the subdisciplines above.
+If you want to model something from the real-world, go for it! Very common early
+object projects usually attempt to model real-world systems like banks, cars,
+etc. Make of this whatever seems interesting to you, and keep in mind that
+you're just brainstorming right now. You do not have to commit to anything.</p>
+<h3 id="example-component">Example Component</h3>
+<p>With all that in mind, here's an example component you can use for reference.
+Feel free to use this example as the groundwork for your own components below.</p>
+<ul>
+<li>Example Component: <code>Point3D</code>
+<ul>
+<li><strong>Description</strong>: The purpose of this component is to model a 3-dimensional point.
+Our intent with this design was to keep a simple kernel that provides getters and
+setters for the three underyling coordinates. Then, we provide more complex
+mathematical operations in the secondary interface. It might be possible to
+create an immutable version of the class by removing the setters and instead
+having all secondary methods return new points. However, this design seems more
+inline with NaturalNumber.</li>
+<li><strong>Kernel Methods</strong>:
+<ul>
+<li><code>double getX()</code>: gets the x-coordinate of <code>this</code></li>
+<li><code>double getY()</code>: gets the y-coordinate of <code>this</code></li>
+<li><code>double getZ()</code>: gets the z-coordinate of <code>this</code></li>
+<li><code>double setX(double x)</code>: sets the x-coordinate of <code>this</code></li>
+<li><code>double setY(double y)</code>: sets the y-coordinate of <code>this</code></li>
+<li><code>double setZ(double z)</code>: sets the z-coordinate of <code>this</code></li>
+</ul>
+</li>
+<li><strong>Secondary Methods</strong>:
+<ul>
+<li><code>void translate(double x, double y, double z)</code>: moves <code>this</code> by translating
+each coordinate by <code>x</code>, <code>y</code>, and <code>z</code>, respectively</li>
+<li><code>void translate(Point3D p)</code>: moves <code>this</code> by treating <code>p</code> as a vector</li>
+<li><code>void move(double x, double y, double z)</code>: moves <code>this</code> by overwriting each
+coordinate with <code>x</code>, <code>y</code>, and <code>z</code>, respectively</li>
+<li><code>void move(Point3D p)</code>: moves <code>this</code> to <code>p</code></li>
+<li><code>double distance(Point3D p)</code>: gives the distance between <code>this</code> and <code>p</code></li>
+<li><code>Point3D vectorTo(Point3D p)</code>: gives the vector from <code>this</code> to <code>p</code></li>
+<li><code>boolean isOrigin()</code>: returns <code>true</code> if all three coordinates are zero</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Keep in mind that the general idea when putting together these layered designs
+is to put the minimal implementation in the kernel. In this case, the kernel is
+only responsible for giving back the coordinates of the point. The secondary
+methods use these getters and setters to perform more complex operations like
+translating the point or computing the distance between two points.</p>
+<p>Also, keep in mind that we don't know the underlying implementation. It would be
+completely reasonable to create a <code>Point3D1L</code> class which layers the kernel on
+top of the existing <code>Point</code> class in Java. It would also be reasonable to
+implement <code>Point3D2</code> on top of three doubles and <code>Point3D3</code> on top of an array.
+Do not worry about your implementations at this time.</p>
+<p>On top of everything above, there is no expectation that you have a perfect
+design. Part of the goal of this project is to have you actually use your
+component once it's implemented to do something interesting. At which point, you
+will likely refine your design to make your implementation easier to use.</p>
+<h3 id="component-designs">Component Designs</h3>
+<blockquote>
+<p>Please use this section to share your designs.</p>
+</blockquote>
+<!-- TODO: brainstorm a component and delete this comment -->
+<ul>
+<li>Component Design #1:
+<ul>
+<li><strong>Description</strong>:</li>
+<li><strong>Kernel Methods</strong>:</li>
+<li><strong>Secondary Methods</strong>:</li>
+</ul>
+</li>
+</ul>
+<!-- TODO: brainstorm a component and delete this comment -->
+<ul>
+<li>Component Design #2:
+<ul>
+<li><strong>Description</strong>:</li>
+<li><strong>Kernel Methods</strong>:</li>
+<li><strong>Secondary Methods</strong>:</li>
+</ul>
+</li>
+</ul>
+<!-- TODO: brainstorm a component and delete this comment -->
+<ul>
+<li>Component Design #3:
+<ul>
+<li><strong>Description</strong>:</li>
+<li><strong>Kernel Methods</strong>:</li>
+<li><strong>Secondary Methods</strong>:</li>
+</ul>
+</li>
+</ul>
+<h2 id="post-assignment">Post-Assignment</h2>
+<p>The following sections detail everything that you should do once you've
+completed the assignment.</p>
+<h3 id="submission">Submission</h3>
+<p>If you have completed the assignment using this template, we recommend that
+you convert it to a PDF before submission. If you're not sure how, check out
+this <a href="https://therenegadecoder.com/blog/how-to-convert-markdown-to-a-pdf-3-quick-solutions/">Markdown to PDF guide</a>. However, PDFs should be
+created for you automatically every time you save, so just double check that
+all your work is there before submitting.</p>
+<h3 id="peer-review">Peer Review</h3>
+<p>Following the completion of this assignment, you will be assigned three
+students' component brainstorming assignments for review. Your job during the
+peer review process is to help your peers flesh out their designs. Specifically,
+you should be helping them determine which of their designs would be most
+practical to complete this semester. When reviewing your peers' assignments,
+please treat them with respect. Note also that we can see your comments, which
+could help your case if you're looking to become a grader. Ultimately, we
+recommend using the following feedback rubric to ensure that your feedback is
+both helpful and respectful (you may want to render the markdown as HTML or a
+PDF to read this rubric as a table).</p>
+<table>
+<thead>
+<tr>
+<th>Criteria of Constructive Feedback</th>
+<th>Missing</th>
+<th>Developing</th>
+<th>Meeting</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Specific</td>
+<td>All feedback is general (not specific)</td>
+<td>Some (but not all) feedback is specific and some examples may be provided.</td>
+<td>All feedback is specific, with examples provided where possible</td>
+</tr>
+<tr>
+<td>Actionable</td>
+<td>None of the feedback provides actionable items or suggestions for improvement</td>
+<td>Some feedback provides suggestions for improvement, while some do not</td>
+<td>All (or nearly all) feedback is actionable; most criticisms are followed by suggestions for improvement</td>
+</tr>
+<tr>
+<td>Prioritized</td>
+<td>Feedback provides only major or minor concerns, but not both. Major and minar concerns are not labeled or feedback is unorganized</td>
+<td>Feedback provides both major and minor concerns, but it is not clear which is which and/or the feedback is not as well organized as it could be</td>
+<td>Feedback clearly labels major and minor concerns. Feedback is organized in a way that allows the reader to easily understand which points to prioritize in a revision</td>
+</tr>
+<tr>
+<td>Balanced</td>
+<td>Feedback describes either strengths or areas of improvement, but not both</td>
+<td>Feedback describes both strengths and areas for improvement, but it is more heavily weighted towards one or the other, and/or descusses both but does not clearly identify which part of the feedback is a strength/area for improvement</td>
+<td>Feedback provides balanced discussion of the document's strengths and areas for improvement. It is clear which piece of feedback is which</td>
+</tr>
+<tr>
+<td>Tactful</td>
+<td>Overall tone and language are not appropriate (e.g., not considerate, could be interpreted as personal criticism or attack)</td>
+<td>Overall feedback tone and language are general positive, tactul, and non-threatening, but one or more feedback comments could be interpretted as not tactful and/or feedback leans toward personal criticism, not focused on the document</td>
+<td>Feedback tone and language are positive, tactful, and non-threatening. Feedback addesses the document, not the writer</td>
+</tr>
+</tbody>
+</table>
+<h3 id="assignment-feedback">Assignment Feedback</h3>
+<blockquote>
+<p>Now that you've had a chance to complete the assignment, is there anything you
+would like to say about the assignment? For example, are there any resources
+that could help you complete this assignment? Feel free to use the feedback
+rubric above when reviewing this assignment.</p>
+</blockquote>
+<!-- TODO: share your feedback here -->
+
+</body>
+</html>

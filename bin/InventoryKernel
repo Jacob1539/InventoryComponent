@@ -1,0 +1,56 @@
+
+/**
+ * Inventory kernel component with primary references.
+ */
+public interface InventoryKernel extends Standard<Inventory> {
+
+    /**
+      * Add an item with barcode {@code barcode} to the inventory with a quantity 0.
+      *
+      * @param barcode the item's barcode
+      * @requires an item with {@code barcode} is not already in {@code this}
+      * @updates {@code this}
+      * @ensures {@code this = #this * item}, where the item has the specified barcode, a quantity of zero, and no other attributes
+      */
+    void add(int barcode);
+
+    /**
+      * Removes an item with barcode {@code barcode} from the inventory.
+      *
+      * @param barcode the item's barcode
+      * @requires an item with {@code barcode} is in {@code this}
+      * @updates {@code this}
+      * @code this * item = #this}, where the item has the specified barcode
+      */
+    void remove(int barcode);
+
+      /**
+      * Increases the quantity of the item with barcode {@code barcode} by one.
+      *
+      * @param barcode the item's barcode
+      * @requires an item with {@code barcode} is in {@code this}
+      * @updates {@code this}
+      * @ensures quantity(barcode) = #quantity(barcode) + 1
+      */
+    void increment(int barcode);
+
+      /**
+      * Decrements the quantity of the item with barcode {@code barcode} by one.
+      *
+      * @param barcode the item's barcode
+      * @requires an item with {@code barcode} is in {@code this}
+      * @updates {@code this}
+      * @ensures quantity(barcode) = #quantity(barcode) - 1
+      */
+    void decrement(int barcode);
+
+    /**
+      * Returns the quantity of the item with barcode {@code barcode}.
+      *
+      * @param barcode the item's barcode
+      * @return the quantity of the item with the specified barcode
+      * @requires an item with {@code barcode} is in {@code this}
+      * @ensures quantity(barcode) = the number of the item with barcode {@code barcode} currently in the inventory
+      */
+      int quantity(int barcode);
+}
