@@ -11,7 +11,8 @@
 .mtj.tmp/
 
 # Package Files #
-*.jar
+binary-tree-utility.jar
+hamcrest-core-1.3.jar
 *.war
 *.nar
 *.ear
